@@ -5,7 +5,7 @@ ahead and the error measures that stay meaningful when most periods are zero.
 
 This is the companion code of the Causal64 research note
 [Intermittent demand forecasting, measured](https://causal64.com/research/intermittent-demand-forecasting/).
-It reproduces the classical-method results of that note exactly (see [Measured result](#measured-result)).
+`examples/reproduce_note.py` recomputes every number of that note, including the pooled gradient-boosting model, the quantile forecasts and the checks added after the first reading (see [Measured result](#measured-result)).
 
 ## What it does
 
@@ -90,12 +90,20 @@ results read once on months 46 to 51. Sealed window, figures from the note:
 What the note concludes, in short: SBA beats Croston (RMSSE 0.590 against 0.615, bias +16 % against +37 %);
 the 12-month moving average, TSB and SES finish within 1 % of each other; the forecast of zero wins on MASE
 (0.625) and, because demand fell over the period, also on RMSSE, which is a warning about the window rather
-than advice. The note also covers a pooled gradient-boosting model and 90 % quantile forecasts, which are not
-part of this package.
+than advice: on the error of the six-month total the forecast of zero is behind the moving average, TSB and
+SES. The SBA bias is Croston's multiplied by 1 - alpha/2, so its lower bias is arithmetic, not a confirmation.
+The note also covers a pooled gradient-boosting model and 90 % quantile forecasts. They are not functions of
+this package, but the script that produced them is in `examples/reproduce_note.py`.
 
 `examples/carparts.py` reruns the protocol with this package. On the same data it returns the same mean MASE,
 mean RMSSE and bias for every method in the table above, to the third decimal, and the same class counts
-(2,090 intermittent, 309 lumpy). The bootstrap intervals agree to within 0.1 point (different random draws).
+(2,090 intermittent, 309 lumpy). Its bootstrap intervals agree with the note to within 0.1 point (different
+random draws).
+
+`examples/reproduce_note.py` is the code that produced the note itself, with its seeds: it prints the same
+intervals as the note, digit for digit, with the library versions given at the top of the file. It needs
+scipy, lightgbm, pyreadr and pandas in addition to this package's dependency. Its second part, `post_hoc()`,
+holds the checks added after the first reading of the test window and labelled post hoc in the note.
 The data is distributed with the R package expsmooth on CRAN under the GPL and is not bundled here; the
 script explains how to obtain it.
 
@@ -132,7 +140,7 @@ If you use this package, please cite the note:
 
 ```bibtex
 @misc{causal64_intermittent_2026,
-  author       = {{Causal64}},
+  author       = {Chadeffaud, Mah{\'e}},
   title        = {Intermittent demand forecasting, measured},
   year         = {2026},
   howpublished = {\url{https://causal64.com/research/intermittent-demand-forecasting/}},
