@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "intermittent-eval"
+version = "0.1.0"
+description = "Croston, SBA and TSB forecasts with a leak-free rolling-origin evaluation for intermittent demand"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Causal64" }]
+keywords = ["intermittent demand", "croston", "sba", "tsb", "forecasting", "mase", "rmsse", "spare parts"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Topic :: Office/Business",
+    "Typing :: Typed",
+]
+dependencies = ["numpy>=1.23"]
+
+[project.optional-dependencies]
+pandas = ["pandas>=1.5"]
+test = ["pytest>=7"]
+
+[project.urls]
+Homepage = "https://causal64.com/research/intermittent-demand-forecasting/"
+Documentation = "https://causal64.com/research/intermittent-demand-forecasting/"
+Source = "https://github.com/causal64/intermittent-eval"
+Issues = "https://github.com/causal64/intermittent-eval/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+intermittent_eval = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
